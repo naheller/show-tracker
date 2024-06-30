@@ -10,7 +10,7 @@ module.exports = async function (fastify, opts) {
   // Connect to Postgres database
   fastify.register(require("@fastify/postgres"), {
     connectionString:
-      "postgres://postgres:postgres@show-tracker-api-db-1:5432/postgres",
+      "postgres://postgres:postgres@show-tracker-db-1:5432/postgres",
     // "postgres://postgres:postgres@localhost:5432/postgres",
   });
 

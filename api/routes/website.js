@@ -47,6 +47,32 @@ module.exports = fp(
         client.release();
       }
     });
+
+    fastify.get("/getBands", async (request, reply) => {
+      const client = await fastify.pg.connect();
+
+      try {
+        const { rows } = await client.query("select * from bands");
+        reply.code(200).send({ bands: rows });
+      } catch (error) {
+        reply.code(error.status || 500).send(error);
+      } finally {
+        client.release();
+      }
+    });
+
+    fastify.get("/getShows", async (request, reply) => {
+      const client = await fastify.pg.connect();
+
+      try {
+        const { rows } = await client.query("select * from shows");
+        reply.code(200).send({ shows: rows });
+      } catch (error) {
+        reply.code(error.status || 500).send(error);
+      } finally {
+        client.release();
+      }
+    });
   },
   {
     name: "routes-website",

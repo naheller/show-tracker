@@ -11,13 +11,6 @@ const options = {};
 module.exports = async function (fastify, opts) {
   Sentry.setupFastifyErrorHandler(fastify);
 
-  // Connect to Postgres database
-  fastify.register(require("@fastify/postgres"), {
-    connectionString:
-      "postgres://postgres:postgres@show-tracker-db-1:5432/postgres",
-    // "postgres://postgres:postgres@localhost:5432/postgres",
-  });
-
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application

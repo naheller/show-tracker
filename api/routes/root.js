@@ -19,4 +19,8 @@ module.exports = fp(async function (fastify, opts) {
       client.release();
     }
   });
+
+  fastify.get("/debug-sentry", async function (request, reply) {
+    throw new Error("My first Sentry error!");
+  });
 });

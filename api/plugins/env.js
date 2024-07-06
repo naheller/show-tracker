@@ -14,6 +14,9 @@ module.exports = fp(
         "MAILER_PASS",
         "MAILER_FROM",
         "MAILER_TO",
+        "PG_USERNAME",
+        "PG_PASSWORD",
+        "PG_DATABASE",
       ],
       properties: {
         SEATGEEK_CLIENT_ID: {
@@ -44,12 +47,25 @@ module.exports = fp(
           type: "string",
           default: "",
         },
+        PG_USERNAME: {
+          type: "string",
+          default: "",
+        },
+        PG_PASSWORD: {
+          type: "string",
+          default: "",
+        },
+        PG_DATABASE: {
+          type: "string",
+          default: "",
+        },
       },
     };
 
     const options = {
       confKey: "env",
       schema: schema,
+      dotenv: true,
     };
 
     fastify.register(require("@fastify/env"), options);

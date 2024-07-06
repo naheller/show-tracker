@@ -34,7 +34,11 @@ module.exports = fp(
           throw error;
         }
       },
-      getEventsByAttractionId: async (request, delayMultiplier = 0) => {
+      getEventsByAttractionId: async (
+        request,
+        delayMultiplier = 0,
+        bandId = null
+      ) => {
         const { TICKETMASTER_API_KEY } = fastify.env;
         const delayMs = 500;
 
@@ -62,9 +66,16 @@ module.exports = fp(
           // );
 
           const { _embedded } = data;
+          const events = _embedded?.events || [];
+
+          if (bandId && events.length) {
+            events.forEach((event) => {
+              event.bandId = bandId;
+            });
+          }
 
           return {
-            events: _embedded?.events || [],
+            events,
             status,
           };
         } catch (error) {

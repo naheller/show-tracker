@@ -21,6 +21,15 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+  cron:
+    depends_on:
+      - api
+    build:
+      context: ./cron
+      dockerfile: ./Dockerfile
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
   website:
     depends_on:
       - api

@@ -1,14 +1,10 @@
+import { error } from '@sveltejs/kit';
+
+/** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	const result = {
-		shows: []
-	};
-
-	const response = await fetch('http://show-tracker-api-1:3000/getShows');
-
-	if (response.ok) {
-		const data = await response.json();
-		result.shows = data.shows;
+	try {
+		return await fetch('http://show-tracker-api-1:3000/getShows').then((res) => res.json());
+	} catch (e) {
+		throw error(500, 'There was an error fetching shows');
 	}
-
-	return result;
 }

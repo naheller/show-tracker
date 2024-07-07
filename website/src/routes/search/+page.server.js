@@ -22,7 +22,6 @@ export async function load({ url }) {
 export const actions = {
 	addBand: async ({ request }) => {
 		const data = await request.formData();
-		console.log('formData', data);
 
 		const name = data.get('name');
 		const id = data.get('id');

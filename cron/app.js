@@ -11,7 +11,8 @@ const checkForShows = async () => {
 
 console.log("Starting cron: checkForShows");
 
-cron.schedule("* * * * *", () => {
+// Every morning at 6am
+cron.schedule("0 6 * * *", () => {
   const date = new Date();
   console.log(`${date.toLocaleString()} - Checking for shows...`);
   checkForShows();

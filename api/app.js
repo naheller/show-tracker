@@ -1,7 +1,7 @@
 "use strict";
 
-// require("./instrument.js");
-// const Sentry = require("@sentry/node");
+require("./instrument.js");
+const Sentry = require("@sentry/node");
 const path = require("node:path");
 const AutoLoad = require("@fastify/autoload");
 
@@ -9,7 +9,7 @@ const AutoLoad = require("@fastify/autoload");
 const options = {};
 
 module.exports = async function (fastify, opts) {
-  // Sentry.setupFastifyErrorHandler(fastify);
+  Sentry.setupFastifyErrorHandler(fastify);
 
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused

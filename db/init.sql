@@ -15,5 +15,6 @@ CREATE TABLE shows
   datetime_utc VARCHAR(50) not null,
   page_url_tm VARCHAR(255),
   venue_name VARCHAR(255),
-  venue_lat_lon VARCHAR(50)
+  venue_lat_lon VARCHAR(50),
+  archived boolean default false,
 );

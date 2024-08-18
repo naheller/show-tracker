@@ -73,6 +73,27 @@ module.exports = fp(
         client.release();
       }
     });
+
+    fastify.patch("/archiveShow/:idTm", async function (request, reply) {
+      const client = await fastify.pg.connect();
+      const { idTm } = request.params;
+      const { archived } = request.body;
+
+      try {
+        const { rows } = await client.query(
+          `update shows
+            set archived=$2
+            where id_tm=$1
+            returning *;`,
+          [idTm, archived]
+        );
+        reply.code(200).send({ shows: rows });
+      } catch (error) {
+        reply.code(error.status || 500).send(error);
+      } finally {
+        client.release();
+      }
+    });
   },
   {
     name: "routes-website",

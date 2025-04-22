@@ -9,6 +9,7 @@ export async function load({ url }) {
 				attractions: []
 			};
 		}
+		// return await fetch(`http://localhost:3000/getBandsByKeyword/${keyword}`).then((res) =>
 		return await fetch(`http://show-tracker-api-1:3000/getBandsByKeyword/${keyword}`).then((res) =>
 			res.json()
 		);
@@ -30,6 +31,7 @@ export const actions = {
 		let resOk = false;
 
 		try {
+			// const res = await fetch(`http://localhost:3000/addBand`, {
 			const res = await fetch(`http://show-tracker-api-1:3000/addBand`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },

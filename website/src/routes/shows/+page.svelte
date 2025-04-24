@@ -42,7 +42,7 @@
   }
 </style>
 
-<h1>{showArchived ? 'Archived Shows' : 'Shows'}</h1>
+<h1>{showArchived ? 'Archived Shows' : 'Upcoming Shows'}</h1>
 
 <button on:click={toggleShowArchived}>
 	{showArchived ? 'Show unarchived' : 'Show archived'}

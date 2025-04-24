@@ -62,6 +62,24 @@ module.exports = fp(
         client.release();
       }
     });
+    fastify.get("/archivePastShows", async function (request, reply) {
+      const client = await fastify.pg.connect();
+
+      try {
+        const { rows } = await client.query(
+          `update shows
+            set archived=true
+            where archived=false
+            and datetime_utc < cast(current_timestamp as text)
+            returning *;`
+        );
+        reply.code(200).send({ shows: rows });
+      } catch (error) {
+        reply.code(error.status || 500).send(error);
+      } finally {
+        client.release();
+      }
+    });
   },
   {
     name: "routes-cron",

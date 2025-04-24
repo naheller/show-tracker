@@ -2,9 +2,19 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
+  let showArchived = false;
+
   $: sortedShows = (data?.shows ? [...data?.shows] : []).sort((a, b) => (
     new Date(a.datetime_utc) - new Date(b.datetime_utc)
   ))
+
+  $: filteredShows = sortedShows.filter(show => (
+		showArchived ? show.archived : !show.archived
+	))
+
+  const toggleShowArchived = () => {
+		showArchived = !showArchived;
+	}
   
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   
@@ -32,7 +42,11 @@
   }
 </style>
 
-<h1>Shows</h1>
+<h1>{showArchived ? 'Archived Shows' : 'Shows'}</h1>
+
+<button on:click={toggleShowArchived}>
+	{showArchived ? 'Show unarchived' : 'Show archived'}
+</button>
 
 {#await data}
 	<p>Loading shows...</p>
@@ -43,13 +57,13 @@
       <th>Name</th>
       <th>Venue</th>
     </tr>
-    {#each sortedShows as show}
-  <tr>
-    <td>{getFormattedDate(show.datetime_utc)}</td>
-    <td><a href={show.page_url_tm} target="_blank">{show.name}</a></td>
-    <td>{show.venue_name}</td>
-  </tr>
-  {/each}
+    {#each filteredShows as show}
+      <tr>
+        <td>{getFormattedDate(show.datetime_utc)}</td>
+        <td><a href={show.page_url_tm} target="_blank">{show.name}</a></td>
+        <td>{show.venue_name}</td>
+      </tr>
+    {/each}
   </table>
 {:catch error}
 	<p style="color: red">{error.message}</p>

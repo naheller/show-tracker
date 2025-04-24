@@ -94,6 +94,22 @@ module.exports = fp(
         client.release();
       }
     });
+
+    fastify.delete("/deleteBand/:bandId", async function (request, reply) {
+      const client = await fastify.pg.connect();
+      const { bandId } = request.params;
+
+      try {
+        // Due to band_id FK on shows, need to delete any existing shows first
+        await client.query(`delete from shows where band_id=$1`, [bandId]);
+        await client.query(`delete from bands where id=$1`, [bandId]);
+        reply.code(200).send();
+      } catch (error) {
+        reply.code(error.status || 500).send(error);
+      } finally {
+        client.release();
+      }
+    });
   },
   {
     name: "routes-website",
